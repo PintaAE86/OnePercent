@@ -1,4 +1,5 @@
 import express, {NextFunction, Request, Response} from 'express';
+import path from 'path';
 import dotenv from 'dotenv'; 
 const app = express();
 
@@ -18,10 +19,9 @@ interface CustomeErr {
     status: number;
     message: string | number;
 }
-
-
 //Serve a static file to client before on initial render 
-//app.use(express.static(path.join(__dirname, 'src/main.tsx')))
+
+app.use(express.static(path.join(__dirname, 'dist')))
 
 app.get('/', (req : Request, res : Response) => {
     res.send('Hello World');
