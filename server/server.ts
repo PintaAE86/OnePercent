@@ -21,7 +21,7 @@ interface CustomeErr {
 }
 //Serve a static file to client before on initial render 
 
-app.use(express.static(path.join(__dirname, 'dist')))
+//app.use(express.static(path.join(__dirname, 'dist')))
 
 app.get('/', (req : Request, res : Response) => {
     res.send('Hello World');
