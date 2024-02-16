@@ -1,17 +1,12 @@
 import express, {NextFunction, Request, Response} from 'express';
-import path from 'path';
 import dotenv from 'dotenv'; 
-const app = express();
-
 dotenv.config();//to ready .env files 
-
 const port = process.env.PORT || 3000;
-
-// to read encoded data by standard format used by HTML
-app.use(express.urlencoded({extended : true}));
+const app = express();
 //built in method to read parse body, dont need a body parser
 app.use(express.json());
-
+// to read encoded data by standard format used by HTML
+app.use(express.urlencoded({extended : true}));
 // types
 //global error handler Object types
 interface CustomeErr {
@@ -19,16 +14,20 @@ interface CustomeErr {
     status: number;
     message: string | number;
 }
-//Serve a static file to client before on initial render 
+//Serve a static file to client before on initial render
 
-//app.use(express.static(path.join(__dirname, 'dist')))
+app.use(express.static('dist'))
 
+//setup database connnect string here: postgress
+
+
+//root path generally to test 
 app.get('/', (req : Request, res : Response) => {
     res.send('Hello World');
 });
 
 app.post('/', (req : Request, res : Response) => {
-    res.send('Hello World');
+    res.send('Hello PostData');
 });
 
 
@@ -51,4 +50,4 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction)=> {
     res.status(500).send('Internal Server Error');
 });
 
-app.listen(port, () => console.log(`Server listening on ${port}`))
+app.listen(port, () => console.log(`Server listening on ${port}`));
