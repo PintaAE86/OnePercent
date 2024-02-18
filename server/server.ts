@@ -3,6 +3,20 @@ import dotenv from 'dotenv';
 dotenv.config();//to ready .env files 
 const port = process.env.PORT || 3000;
 const app = express();
+//Pool is used when you want to connect to your database using environment variables 
+import { Pool, Client } from 'pg';
+const client = new Client({
+    user: 'username',
+    host: 'your host',
+    database: 'your db',
+    port: 5432
+});
+
+client.connect((err)=>{
+    if(err) throw err;
+    console.log('Connected to DB...')
+});
+
 //built in method to read parse body, dont need a body parser
 app.use(express.json());
 // to read encoded data by standard format used by HTML
