@@ -1,21 +1,12 @@
 import express, {NextFunction, Request, Response} from 'express';
 import dotenv from 'dotenv'; 
 dotenv.config();//to ready .env files 
-const port = process.env.PORT || 3000;
+const serverport = process.env.PORT || 3000;
 const app = express();
 //Pool is used when you want to connect to your database using environment variables 
-import { Pool, Client } from 'pg';
-const client = new Client({
-    user: 'username',
-    host: 'your host',
-    database: 'your db',
-    port: 5432
-});
-
-client.connect((err)=>{
-    if(err) throw err;
-    console.log('Connected to DB...')
-});
+import pg from 'pg';
+const { Pool } = pg;
+import { server } from 'typescript';
 
 //built in method to read parse body, dont need a body parser
 app.use(express.json());
@@ -33,8 +24,18 @@ interface CustomeErr {
 app.use(express.static('dist'))
 
 //setup database connnect string here: postgress
+ 
+const pool = new Pool({
+    user: `${process.env.PGUSER}`,
+    host: `${process.env.PGHOST}`,
+    database: `${process.env.PGDATABASE}`,
+    password: `${process.env.PGPASSWORD}`,
+    port: 5432,
+    max: 20,
+    idleTimeoutMillis: 30000
+});
 
-
+console.log(await pool.query('SELECT NOW()'))
 //root path generally to test 
 app.get('/', (req : Request, res : Response) => {
     res.send('Hello World');
@@ -64,4 +65,4 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction)=> {
     res.status(500).send('Internal Server Error');
 });
 
-app.listen(port, () => console.log(`Server listening on ${port}`));
+app.listen(serverport, () => console.log(`Server listening on ${serverport}`));
