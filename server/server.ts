@@ -35,14 +35,21 @@ const pool = new Pool({
     idleTimeoutMillis: 30000
 });
 
-console.log(await pool.query('SELECT NOW()'))
+pool.on('error', (err) => {
+    console.error('Unexpected error on idle client', err);
+    process.exit(-1);
+})
+
+console.log('Tables in the db',await pool.query('SELECT * FROM users'))
 //root path generally to test 
 app.get('/', (req : Request, res : Response) => {
     res.send('Hello World');
 });
 
 app.post('/', (req : Request, res : Response) => {
-    res.send('Hello PostData');
+    const {username, email} = req.body;
+    //pool.query('INSERT INTO users (username, email) VALUE ($1, $2) RETURNING *', [username, email])
+    res.send(`${username} and ${email} saved in database`);
 });
 
 
