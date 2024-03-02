@@ -1,13 +1,14 @@
 // import { useState } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
+import { Goals } from './views/Goals'
 function App() {
 
 
   return (
   <div>
     <Navbar />
-    <h1>Hellosdfsd</h1>
+    <Goals />
   </div>
   )
 }
