@@ -1,32 +1,39 @@
-import React from 'react'
-import { useState } from 'react'
+import React, {useState} from 'react'
+import { Button } from 'react-bootstrap';
+import { CardComponent } from '../components/CardComponent';
 
 export const Goals = () => {
-  const [ goal, setGoal] = useState('');
-  const [stack, setStack] = useState([]);
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if(goal === '' || goal.length < 1){
-      alert(`Emtpy String: ${goal}`)
-    }else{
-      setStack((pre) => [...pre, goal])
-      console.log(`In stack so far: ${stack}`)
+  const [ goal, setGoal] = useState<string>('');
+  const [stack, setStack] = useState<string[]>([]);
 
-      setGoal('')
+  const handleSubmit = (event : React.FormEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+
+    if(goal.trim().length === 1){
+      alert(`Emtpy String: ${goal}`);
+      console.error('Goal connot be an empty string');
+      console.log('currentstack');
+      return;
     }
+    setStack((preStack)=> [...preStack, goal]);
+    setGoal('');
 
   } 
-  
-  return (
+    return (
+    <>
     <form onSubmit={handleSubmit}>
-      <label htmlFor=""> Add your goal: 
+      <label htmlFor=""> Add your goals here: {''}
         <input 
           type="text" 
           value = {goal}
           onChange={(e) =>setGoal(e.target.value)}
         />
       </label>
+      <Button variant='primary' type='submit'> Submit</Button>
     </form>
+
+    {stack.length > 0 && stack.map((Goal, index) => <CardComponent key = {index} propGoal={Goal} /> )}
+    </>
   )
-}
+};
 
