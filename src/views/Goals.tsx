@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { Button } from 'react-bootstrap';
 import { CardComponent } from '../components/CardComponent';
 
+
 export const Goals = () => {
   const [ goal, setGoal] = useState<string>('');
   const [stack, setStack] = useState<string[]>([]);
@@ -18,7 +19,11 @@ export const Goals = () => {
     setStack((preStack)=> [...preStack, goal]);
     setGoal('');
 
-  } 
+  };
+  
+  const handleRemove = (itemId) => {
+    console.log('item deleted', itemId)
+  }
     return (
     <>
     <form onSubmit={handleSubmit}>
@@ -32,7 +37,7 @@ export const Goals = () => {
       <Button variant='primary' type='submit'> Submit</Button>
     </form>
 
-    {stack.length > 0 && stack.map((Goal, index) => <CardComponent key = {index} propGoal={Goal} /> )}
+    {stack.length > 0 && stack.map((Goal, index) => <CardComponent propId = {`${Goal}_${index}`} key = {index} propGoal={Goal} oneDelete={handleRemove} /> )}
     </>
   )
 };
