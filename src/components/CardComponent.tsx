@@ -16,7 +16,7 @@ export const CardComponent = ({propGoal , propId, oneDelete})=> {
       <Card.Text>
        Here is some progress so far
       </Card.Text>
-      <Button variant="danger" onClick={() => oneDelete(propId)}>Delete
+      <Button variant="danger" onClick={()=>(oneDelete(propId))}>Delete
       </Button>
       <Button variant="secondary" >Modify
       </Button>

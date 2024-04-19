@@ -5,55 +5,54 @@ import { CardComponent } from '../components/CardComponent';
 
 
 export const Goals = () => {
-  const [ goal, setGoal] = useState<string>('');
+  const [goal, setGoal] = useState<string>('');
   const [stack, setStack] = useState<string[]>([]);
 
-  const handleSubmit = (event : React.FormEvent<HTMLLabelElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if(goal.trim().length === 1){
-      alert(`Emtpy String: ${goal}`);
-      console.error('Goal connot be an empty string');
+    if (goal.trim().length <= 1) {
+      alert(`Empty String: ${goal}`);
+      console.error('Goal cannot be an empty string');
       console.log('currentstack');
       return;
     }
-    setStack((preStack)=> [...preStack, goal]);
-    setGoal('');
-
+    setStack((prevStack) => [...prevStack, goal]);
+    setGoal(''); // Clear the input field
   };
-  
+
   const handleRemove = (itemId) => {
-    console.log('item deleted', itemId)
-  }
-    return (
+    console.log('item deleted', itemId);
+    const index = parseInt(itemId, 10);
+    setStack((prevStack) => prevStack.filter((_, i) => i !== index));
+  };
+
+  return (
     <>
-    <Form>
-      <Form.Group className='mb-3'>
-        <Form.Label>Add your goals here:</Form.Label>
-        <Form.Control type='text' placeholder='Running...' />
-        <Form.Text value = {goal}
-          onChange={(e) =>setGoal(e.target.value)} className='text-muted'>
-          Lets Go!!!
-        </Form.Text>
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Add
-      </Button>
-
-    </Form>
-    {/* <form onSubmit={handleSubmit}>
-      <label htmlFor=""> Add your goals here: {''}
-        <input 
-          type="text" 
-          value = {goal}
-          onChange={(e) =>setGoal(e.target.value)}
-        />
-      </label>
-      <Button variant='primary' type='submit'> Submit</Button>
-    </form>
-
-    {stack.length > 0 && stack.map((Goal, index) => <CardComponent propId = {`${Goal}_${index}`} key = {index} propGoal={Goal} oneDelete={handleRemove} /> )} */}
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Add your goals here:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Running..."
+            value={goal}
+            onChange={(e) => setGoal(e.target.value)}
+          />
+          <Form.Text className="text-muted">Let's Go!!!</Form.Text>
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Add
+        </Button>
+      </Form>
+      {stack.length > 0 &&
+        stack.map((Goal, index) => (
+          <CardComponent
+            propId={`${index}`}
+            key={index}
+            propGoal={Goal}
+            oneDelete={handleRemove}
+          />
+        ))}
     </>
-  )
+  );
 };
 
