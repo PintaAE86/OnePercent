@@ -7,6 +7,7 @@ import { CardComponent } from '../components/CardComponent';
 export const Goals = () => {
   const [goal, setGoal] = useState<string>('');
   const [stack, setStack] = useState<string[]>([]);
+  const [isMod, setIsMod] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,6 +26,15 @@ export const Goals = () => {
     const index = parseInt(itemId, 10);
     setStack((prevStack) => prevStack.filter((_, i) => i !== index));
   };
+
+  const handleMod = (itemId) => {
+    const index = parseInt(itemId, 10);
+    console.log('item modifined', itemId, index);
+    setIsMod(true);
+    // setStack((prevStack) => prevStack.forEach((_, i) => {
+    //   if(i === index) 
+    // }))
+  }
 
   return (
     <>
@@ -49,7 +59,9 @@ export const Goals = () => {
             propId={`${index}`}
             key={index}
             propGoal={Goal}
+            propIsMode={isMod}
             oneDelete={handleRemove}
+            onMod={handleMod}
           />
         ))}
     </>
