@@ -5,8 +5,6 @@ import { Goals } from './views/Goals'
 //import 'bootstrap/dist/css/bootstrap.min.css'; --> using cdn instead for lastest 
 
 function App() {
-
-
   return (
   <div>
     <NavbarComponent />

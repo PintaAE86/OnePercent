@@ -1,5 +1,7 @@
 import express, {NextFunction, Request, Response} from 'express';
 import dotenv from 'dotenv'; 
+import path from 'path';
+import { fileURLToPath } from 'url';
 dotenv.config();//to ready .env files 
 const serverport = process.env.PORT || 3000;
 const app = express();
@@ -20,8 +22,17 @@ interface CustomeErr {
     message: string | number;
 }
 //Serve a static file to client before on initial render
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.use(express.static('dist'))
+// Serve static files from the dist folder
+console.log(__dirname);
+app.use(express.static(path.join(__dirname, '..', 'dist')));
+
+// Catch-all route to serve the index.html file for any other requests
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
+});
 
 //setup database connnect string here: postgress
  
@@ -40,10 +51,10 @@ pool.on('error', (err) => {
     process.exit(-1);
 })
 
-console.log('Tables in the db',await pool.query('SELECT * FROM users'))
+//console.log('Tables in the db',await pool.query('SELECT * FROM users'))
 //root path generally to test 
 app.get('/', (req : Request, res : Response) => {
-    res.send('Hello World');
+    res.send('Hello from Server.ts');
 });
 
 app.post('/', (req : Request, res : Response) => {
