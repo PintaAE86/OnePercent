@@ -22,13 +22,13 @@ export const Goals = () => {
     setGoal(''); // Clear the input field
   };
 
-  const handleRemove = (itemId) => {
+  const handleRemove = (itemId : string) => {
     console.log('item deleted', itemId);
     const index = parseInt(itemId, 10);
     setStack((prevStack) => prevStack.filter((_, i) => i !== index));
   };
 
-  const handleMod = (itemId, updatedText) => {
+  const handleMod = (itemId : string, updatedText : string) => {
     const index = parseInt(itemId, 10);
     console.log('item modifined', itemId, index, updatedText);
     setIsMod(!isMod);
@@ -67,7 +67,6 @@ export const Goals = () => {
               propId={`${index}`}
               key={index}
               propGoal={Goal}
-              propIsMode={isMod }
               oneDelete={handleRemove}
               onMod={handleMod}
             />

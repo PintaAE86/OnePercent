@@ -8,7 +8,7 @@ const app = express();
 //Pool is used when you want to connect to your database using environment variables 
 import pg from 'pg';
 const { Pool } = pg;
-import { server } from 'typescript';
+// import { server } from 'typescript';
 
 //built in method to read parse body, dont need a body parser
 app.use(express.json());

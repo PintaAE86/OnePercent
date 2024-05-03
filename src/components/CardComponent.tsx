@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button, Form } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 
-interface propsTypes {
-  propGoal : string;
-  propId : string
+interface PropsTypes {
+  propGoal : string,
+  propId : string,
+  oneDelete : (id : string) =>  void,
+  onMod : (id : string , text : string) => void
 }
 
-export const CardComponent = ({propGoal , propId, propIsMode, oneDelete, onMod})=> {
+export const CardComponent = ({propGoal , propId, oneDelete, onMod} : PropsTypes)=> {
 
   const [modifiedText, setModifiedText] = useState(propGoal);
   const [isModifying, setIsModifying] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e : React.SyntheticEvent) : void => {
     e.preventDefault();
     onMod(propId, modifiedText);
     setIsModifying(false);
