@@ -6,6 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 const serverport = process.env.PORT || 3000;
 const app = express();
+import session from 'express-session';
 
 //Serve a static file to client before on initial render
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +29,17 @@ interface CustomeErr {
 app.use(express.json());
 // to read encoded data by standard format used by HTML
 app.use(express.urlencoded({extended : true}));
+
+app.use(session({
+    name : 'session_name', //name of session id cookie
+    secret: 'keyboard_cat', //used to sign the session cookie
+    resave: false, //forces teh session to be resaved back to the session store if not modified
+    saveUninitialized: false, //forces a new session to be saved when it is created new
+    cookie: {
+        secure : false,
+        maxAge : 1000 * 60 * 60 * 24 // 1000 milliesec x 60 sec x 60 min x 24 hrs
+    }
+}));
 
 // --------> Serving Static Files <----------
 // Serve static files from the dist folder
