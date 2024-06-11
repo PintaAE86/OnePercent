@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 
 interface Signup {
     fName: string,
@@ -28,6 +28,7 @@ export const SignUp : React.FC = () => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('insideHandleSubmit:', userData)
+        triggerApi(userData);
         setUserData({
             fName: "",
             lName: "",
@@ -36,6 +37,24 @@ export const SignUp : React.FC = () => {
             pswd: ""
         })
       };
+
+    const triggerApi = async (data : Signup) => {
+        try {
+            const response = await fetch('localhost:8080', {
+                method: "POST",
+                mode: "cors",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            if(!response.ok){
+                throw new Error('Faild to send data due to network connectivity issues.')
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
   return (
     <>

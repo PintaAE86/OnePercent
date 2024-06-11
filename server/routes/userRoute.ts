@@ -1,4 +1,3 @@
-import express, { Response, Request, NextFunction} from "express";
 import { Router } from "express";
 import authController from "../controllers/authController";
 

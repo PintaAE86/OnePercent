@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 
 interface Login {
     userName: string,
@@ -19,7 +19,7 @@ const Login : React.FC = () => {
         setUserData((preData) => ({...preData, [name] : value}))
      }
 
-    const handleSubmit = (e :  FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log('inSubmit', userData)
         // useEffect(()=> {}, [])

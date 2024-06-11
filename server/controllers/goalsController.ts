@@ -1,24 +1,29 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 
 export default{
 
-    getGoal : (req : Request, res : Response, next : NextFunction) : void => {
-
+    getGoal : (req : Request, res : Response, ) : void => {
+        console.log(req)
         res.send('Not Implement: testing getGoal')
     },
-    addGoal : (req : Request, res : Response, next : NextFunction ) : void => {
+    addGoal : (req : Request, res : Response ) : void => {
+        console.log(req)
         res.send('Not Implement: testing addGoal')
     },
-    updataGoal : (req : Request, res : Response, next : NextFunction ) : void => {
+    updataGoal : (req : Request, res : Response) : void => {
+        console.log(req)
         res.send('Not Implement: testing updateGoal')
     },
-    deleteGoal : (req : Request, res : Response, next : NextFunction) : void => {
+    deleteGoal : (req : Request, res : Response) : void => {
+        console.log(req)
         res.send('Not Implement: testing deleteGoal')
     },
-    incrementGoal : (req: Request, res: Response, next : NextFunction) : void => {
+    incrementGoal : (req: Request, res: Response) : void => {
+        console.log(req)
         res.send('Not Implement: testing incrementGoal')
     },
-    decrementGoal : ( req: Request, res: Response, next : NextFunction) : void => {
+    decrementGoal : ( req: Request, res: Response) : void => {
+        console.log(req)
         res.send('Not Implement: testing decrementGoal')
     }
 }

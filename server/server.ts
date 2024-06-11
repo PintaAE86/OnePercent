@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'; 
 dotenv.config();//to ready .env files 
 
-import express, {NextFunction, Request, Response} from 'express';
+import express, { Request, Response} from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const serverport = process.env.PORT || 3000;
@@ -52,6 +52,7 @@ app.use('/api/goals', routerGoals);
 
 // Catch-all route to serve the index.html file for any other requests
 app.get('*', (req, res) => {
+    console.log(req)
     res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
 });
 
@@ -70,11 +71,13 @@ app.get('*', (req, res) => {
 // -------> Error Handling <--------------
 // Catch all error handler 
 app.use((req : Request, res: Response) => {
+    console.log(req)
     res.status(404).send('Does not exist.')
 })
 
 //Global Error Handling 
-app.use((err: Error, req: Request, res: Response, next: NextFunction)=> {
+app.use((err: Error, req: Request, res: Response)=> {
+    console.log(req)
      const defaultErr: CustomeErr = {
         log: 'Express error handler caught middlerwear error',
         status: 400,
